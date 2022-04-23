@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b698dd9d41.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/icons/all.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/style2.css')}}">
+    <title>Optimized Portfolio Weightage</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <ul>
+                <li class="list">
+                    <a href="/loggedin">
+                        <span class="icon">
+                            <i class="fa fa-thin fa-house"></i>
+                        </span>
+                        <span class="icon">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/user/show/{{session['user_id']}}">
+                        <span class="icon"> 
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span class="icon">Profile</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            
+                        </span>
+                        <span class="icon">Portfolio</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa fa-solid fa-arrow-trend-up"></i>
+                        </span>
+                        <span class="icon"> Dashboard</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/logout">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                        <span class="icon">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+    
+        </nav>
+
+        <table class="table table-striped table-bordered" >
+            <thead class="table-dark">
+                <h1 >Your Portfolio Options</h1>
+                <form action="/stock">
+                <button >Add to Portfolio</button>
+                </form>
+                <h3>Max Sharpe Ratio (Optimal Portfolio)</h3>
+                <tr>
+                    <th>Portfolio Expected Return</th>
+                    <th>Annual Volitility</th>
+                    <th>Sharpe Ratio</th>
+                    <th>Optimal Shares</th>
+                    <th>Optimal Weightage</th>
+                </tr>
+            </thead>
+            <tbody class="table-light" id="displaystock">
+                    <tr> 
+                        <td> {{ data3['ER'] }}</td>
+                        <td> {{ data3['AV'] }}</td>
+                        <td> {{"%.2f" % data3['SR'] }}</td>
+                        <td>
+                            {% for key, val in data['allocation']|dictsort(false, 'value') %}
+                            <p>{{key}}: {{val}} shares </p> 
+                            {% endfor %}
+                            <p>Leftover capital: {{"%.2f" % data['leftover']}}</p>
+                        </td>
+
+                        <td> 
+                        
+                        {% for key, val in w|dictsort(false, 'value') %}
+                        <p>{{key}}: {{val}}  </p> 
+                        {% endfor %}
+                    </td>
+                    </tr>
+
+              
+           
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered" >
+            <thead class="table-dark">
+                <h3>Equally Balanced Portfolio</h3>
+                <tr>
+                    <th>Portfolio Expected Return</th>
+                    <th>Annual Volitility</th>
+                    <th>Sharpe Ratio</th>
+                    <th>Shares</th>
+                    <th>Weightage</th>
+                </tr>
+            </thead>
+            <tbody class="table-light" id="displaystock">
+                    <tr> 
+                        <td> {{show['ER'] }}</td>
+                        <td> {{show['OR'] }}</td>
+                        <td> {{"%.2f" % sharpe }}</td>
+                            <td>
+                                {% for key, val in data5['eq']|dictsort(false, 'value') %}
+                                <p>{{key}}: {{val}} shares </p> 
+                                {% endfor %}
+                                <p>Leftover capital: {{"%.2f" % data5['rc']}}</p>
+                            </td>
+                         
+                        </td>
+                        <td>
+                        
+                        {% for key, val in data5['w']|dictsort(false, 'value') %}
+                        <p>{{key}}: {{"%.4f" % val}}  </p> 
+                        {% endfor %}
+                    </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+                <table class="table table-striped table-bordered" >
+                    <thead class="table-dark">
+                        <h3>Minimum Risk Portfolio</h3>
+                        <tr>
+                            <th>Portfolio Expected Return</th>
+                            <th>Annual Volitility</th>
+                            <th>Sharpe Ratio</th>
+                            <th>Optimal Shares</th>
+                            <th>Optimal Weightage</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-light" id="displaystock">
+                            <tr> 
+                                <td> {{data4['ER'] }}</td>
+                                <td> {{data4['AV'] }}</td>
+                                <td> {{data4['SR'] }}</td>
+                                <td>
+                                    {% for key, val in data4['ma']|dictsort(false, 'value') %}
+                                    <p>{{key}}: {{val}} shares </p> 
+                                    {% endfor %}
+                                    <p>Leftover capital: {{"%.2f" % data4['rc']}}</p>
+                                </td>
+
+                                <td> 
+                        
+                                    {% for key, val in minvol|dictsort(false, 'value') %}
+                                    <p>{{key}}: {{ "%.4f" % val}}  </p> 
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+        
+        
+
+
+
+
+</body>
+</html>

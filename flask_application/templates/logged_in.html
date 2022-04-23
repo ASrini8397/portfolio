@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b698dd9d41.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/icons/all.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/style2.css')}}">
+    <title>Your Portfolio</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <ul>
+                <li class="list">
+                    <a href="/loggedin">
+                        <span class="icon">
+                            <i class="fa fa-thin fa-house"></i>
+                        </span>
+                        <span class="icon">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    
+                    <a href="/user/show/{{session['user_id']}}">
+                        <span class="icon"> 
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span class="icon">Profile</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            
+                        </span>
+                        <span class="icon">Portfolio</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa fa-solid fa-arrow-trend-up"></i>
+                        </span>
+                        <span class="icon"> Dashboard</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/logout">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                        <span class="icon">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+    
+        </nav>
+    
+        <!-- <form id="stockpicker" onsubmit="search(event)"> 
+            <input type="text" name="stocks" placeholder="Search ticker symbol">
+            <button >Search</button>
+        </form>
+        <script>
+
+search =(e) =>{
+    e.preventDefault();
+    const stockpicker = document.getElementById('stockpicker')
+    const form = new FormData(stockpicker);
+    console.log(form)
+    console.log(stockpicker)
+    console.log("submitted")
+    fetch('http://localhost:5000/getstock',{method:'POST',body:form})
+        .then(res => {
+            res.json() 
+            console.log(res)
+        })
+        .then( data => {
+            console.log(data) 
+        
+        })
+} -->
+        <!-- </script> -->
+        <table class="table table-striped table-bordered" >
+            <thead class="table-dark">
+                <h1 >Your Portfolio</h1>
+                <div class="topstuff">
+                <form action="/stock">
+                <button >Add to Portfolio</button>
+                </form>
+                <form action="/stock/optimize" method="post">
+                    <label for="capital">Enter the amount you wish to invest in this portfolio </label>
+                    <input type="number" name="capital" value="capital">
+                    {% for message in get_flashed_messages(category_filter=["err_capital"]) %}
+                        <p class= "alert alert-danger">{{message}}</p>
+            {% endfor %}
+                    <button class="abcde">Optimize Portfolio</button>
+        
+                </form>
+            </div>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Ticker</th>
+                    <th>Price (USD)</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-light" id="displaystock">
+                {% if all_stocks%}
+                {% for stocks in all_stocks%}
+                <tr> 
+                    <td> {{stocks.name}}</td>
+                    <td> {{stocks.ticker}}</td>
+                    <td> {{stocks.price}}</td>
+                    <td> {{stocks.created_at}}</td>
+                    <td>
+                        <form action="/stock/forecast/{{stocks.id}}">
+                            <button>Forecast</button>
+                        </form>
+
+                        <form action="/stock/delete/{{stocks.id}}">
+                        <button>Remove</button>
+                    </form>
+                    </td>
+                    
+
+                </tr>
+                {%endfor%}
+                {% endif %}
+            </tbody>
+        </table>
+        
+        
+    </div>
+    <!-- <script src="{{url_for('static',filename='/js/script.js')}}"> </script> -->
+    
+</body>
+</html>

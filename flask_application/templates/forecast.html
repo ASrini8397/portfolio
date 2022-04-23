@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b698dd9d41.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/icons/all.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/style2.css')}}">
+    <title>Your Portfolio</title>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="navigation">
+            <ul>
+                <li class="list">
+                    <a href="/loggedin">
+                        <span class="icon">
+                            <i class="fa fa-thin fa-house"></i>
+                        </span>
+                        <span class="icon">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/user/show/{{session['user_id']}}">
+                        <span class="icon"> 
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span class="icon">Profile</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/loggedin">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            
+                        </span>
+                        <span class="icon">Portfolio</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa fa-solid fa-arrow-trend-up"></i>
+                        </span>
+                        <span class="icon"> Dashboard</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/logout">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                        <span class="icon">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav> 
+        
+    </div>
+    <meta id="data" data="{{ values }}">
+    <meta id="labels" data="{{ labels }}">
+    <meta id="forecastdata" data="{{ forecastdata }}">
+    
+    <div class="graphelement">
+        
+        <canvas id="myChart" width="800px" height="400px"></canvas>
+        <div class="stacked">
+        <h3 class="newheader">Forecasted Prices using SVM Kernels</h3>
+        <table class="table table-bordered table-dark">
+            <thead class="thead-dark">
+                
+                <caption><h3>Forecasted Prices using SVM Kernel Functions</h3></caption> 
+                <tr>
+                    <th scope="col"> Radial Basis Function:</th>
+                    <th scope="col"> Polynomial Kernel:</th>
+                    <th scope="col"> Linear Kernel:</th>
+                </tr>
+            </thead>
+            <tbody class="table-dark">
+                <tr>
+                    <td><p>$ {{"%.2f" % forecastdata['rbft'][0]}}</p></td>
+                    <td><p>${{"%.2f" % forecastdata['polyt'][0]}}</p></td>
+                    <td><p>${{"%.2f" % forecastdata['lint'][0]}}</p></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+            
+            
+        
+    </div>
+    
+    <script>
+         // Global parameters:
+// do not resize the chart canvas when its container does (keep at 600x400px)
+
+ 
+ // define the chart data
+ var chartData = {
+ labels : [{% for item in labels %}
+ "{{item}}",
+ {% endfor %}
+ 'RBF Forecast',
+ 'Polynomial Forecast',
+ 'Linear Forecast'
+
+],
+ datasets : [{
+ label: '{{ legend }}',
+ fill: false,
+ lineTension: 0.1,
+ backgroundColor: "rgba(75,192,192,0.4)",
+ borderColor: "rgba(75,192,192,1)",
+ borderCapStyle: 'butt',
+ borderDash: [],
+ borderDashOffset: 0.0,
+ borderJoinStyle: 'miter',
+ pointBorderColor: "rgba(52, 67, 235)",
+ pointBackgroundColor: "#fff",
+ pointBorderWidth: 2,
+ pointHoverRadius: 5,
+ pointHoverBackgroundColor: "rgba(75,192,192,1)",
+ pointHoverBorderColor: "rgba(220,220,220,1)",
+ pointHoverBorderWidth: 2,
+ tension: 0.4,
+ pointRadius: 1,
+ pointHitRadius: 10,
+ data : [{% for item in values %}
+ {{item}},
+ {% endfor %} 
+ {{forecastdata['rbft'][0]}},
+ {{forecastdata['polyt'][0]}},
+ {{forecastdata['lint'][0]}}
+
+],
+ spanGaps: false,
+
+ }]
+ }
+
+  
+ // get chart canvas
+ var ctx = document.getElementById("myChart").getContext("2d");
+
+  
+ // create the chart using the chart canvas
+ var myChart = new Chart(ctx, {
+ type: 'line',
+ data: chartData,
+ options:{
+     maintainAspectRatio: true,
+     responsive: false,
+
+     xAxes: [{
+    ticks: {
+        autoSkip: false,
+       
+    }
+}]
+   
+ }
+ });
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b698dd9d41.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/icons/all.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/style2.css')}}">
+    <title>You Logged In</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <ul>
+                <li class="list">
+                    <a href="/loggedin">
+                        <span class="icon">
+                            <i class="fa fa-thin fa-house"></i>
+                        </span>
+                        <span class="icon">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"> 
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span class="icon">Profile</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            
+                        </span>
+                        <span class="icon">Portfolio</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fa fa-solid fa-arrow-trend-up"></i>
+                        </span>
+                        <span class="icon"> Dashboard</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/logout">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                        <span class="icon">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+    
+        </nav>
+        <h1>Search for stocks to add to your Portfolio</h1>
+        <form action=/getstocks  method='post' class="abc"> 
+            <input type="text" name="stocks" placeholder="Search ticker symbol" class="abcc">
+            <button >Search</button>
+        </form>
+        <script>
+
+// search =(e) =>{
+//     e.preventDefault();
+//     const stockpicker = document.getElementById('stockpicker')
+//     const form = new FormData(stockpicker);
+//     console.log(form)
+//     console.log(stockpicker)
+//     console.log("submitted")
+//     fetch('http://localhost:5000/getstock',{method:'POST',body:form})
+//         .then(res => {
+//             res.json() 
+//             console.log(res)
+//         })
+//         .then( data => {
+//             console.log(data) 
+        
+//         })
+// }
+ </script>
+        <table class="table table-striped table-bordered" >
+            <thead class="table-dark">
+                
+                <h1> Search Results:</h1>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Ticker</th>
+                    <th>Listed Exchange</th>
+                    <th>Actions:</th>
+                </tr>
+            </thead>
+            <tbody class="table-light" id="displaystock">
+                 
+                {% for stocks in stockarr%}
+                <tr>
+                    <td> {{stocks['name']}}</td>
+                    <td> {{stocks['ticker']}}</td>
+                    <td> {{stocks['exchange']}}</td>
+                    
+                    <td>
+                        <form action="/setstock" method="post">
+                            <input type="hidden" name="ticker" value="{{stocks['ticker']}}">
+                            <input type="hidden" name="name" value="{{stocks['name']}}">
+                            <input type="hidden" name="price" value="{{stocks['price']}}">
+                            <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                            <button>Add to Portfolio</button>
+                        </form>
+                    </td>
+                </tr>
+                {%endfor%}
+                
+                
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <!-- <script src="{{url_for('static',filename='/js/script.js')}}"> </script> -->
+    
+</body>
+</html>

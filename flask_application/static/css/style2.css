@@ -1,0 +1,156 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+}
+body{
+    background-image: url("https://cdn.pixabay.com/photo/2020/04/19/01/20/chart-5061487__340.jpg");
+    background-size: cover;
+    background-color: black;
+}
+
+.navigation{
+    width: 100%;
+    height: 110px;
+    background-color: rgb(2,28,66);
+    font-family: 'Popins', sans-serif;
+    display: flex;
+    color:black;
+}
+
+
+ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation ul li{
+    display: flex;
+    position: relative;
+    width: 90%;
+    height: 100%;
+    z-index: 1;
+    margin: 0 70px;
+    
+}
+
+.navigation ul li a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+    
+    
+}
+
+.icon{
+    margin: 8px;
+    height: 50%;
+    width: 40%;
+}
+h1{
+    color:white;
+    margin:auto;
+}
+button{
+   
+    color:antiquewhite;
+    background-color:rgb(2,28,66) ;
+    height:50px;
+    width: 80px;
+    margin:auto;
+}
+
+.abc{
+    margin:auto;
+    width:500px;
+    height:40px;
+}
+
+.abcc{
+    margin:auto;
+    width:300px;
+    height:40px; 
+}
+
+label{
+    color: white;
+    font-size: medium;
+    margin: auto;
+}
+
+.abcde{
+    margin:auto;
+    padding:auto;
+    height:60px;
+    width:80px;
+}
+
+.topstuff{
+    display: flex;
+    flex-direction: row;
+}
+
+h3{
+    color: white;
+    text-align: center;
+}
+
+.graphelement{
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin:auto;
+    padding:auto;
+    width: 77%;
+    height:auto;
+}
+
+
+
+.stacked{
+    display: flex;
+    flex-direction: column;
+}
+
+.userdetails{
+    width: 500px;
+    background: rgba(0,0,0,0.8);
+    margin: 12% auto;
+    padding: 50px 0;
+    color: #fff;
+    box-shadow: 0 0 20px 2px rgba(0,0,0,0,5);
+}
+
+.userbox{
+    margin: 31px auto;
+    width:80%;
+    border-bottom: 1px solid #fff;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background: transparent;
+}
+.userbox input{
+    width:90%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+
+}
+
+::placeholder{
+    color: #ccc;
+}
