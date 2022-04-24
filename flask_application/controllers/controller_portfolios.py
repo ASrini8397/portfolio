@@ -49,7 +49,7 @@ def stockform():
 
     headers = {
         "X-RapidAPI-Host": "yh-finance.p.rapidapi.com",
-        "X-RapidAPI-Key": "8724a05bafmsh7092dbe2bfb89b5p11cc18jsn862c8f2a4bf0"
+        "X-RapidAPI-Key": "YOUR API KEY HERE"
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
@@ -90,7 +90,7 @@ def show_stock():
 
     headers = {
         "X-RapidAPI-Host": "yh-finance.p.rapidapi.com",
-        "X-RapidAPI-Key": "8724a05bafmsh7092dbe2bfb89b5p11cc18jsn862c8f2a4bf0"
+        "X-RapidAPI-Key": "YOUR API KEY HERE"
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
